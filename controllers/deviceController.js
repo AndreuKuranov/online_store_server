@@ -65,16 +65,27 @@ class DeviceController {
 
   async put(req, res) {
     const { id } = req.params
+    let { name, price, img, brandId, typeId, info } = req.body
 
     console.log(req.body);
 
-    // const device = await Device.update({ 
-    //   name: req.body.name 
-    // }, {
-    //   where: { id }
-    // })
+    const device = await Device.update({ name, price, img, brandId, typeId }, {
+      where: { id },
+    })
 
-    // return res.json(device)
+    if (info) {
+      info = JSON.parse(info)
+      info.forEach(i =>
+        DeviceInfo.update({
+          title: i.title,
+          description: i.description,
+        }, {
+          where: { id: i.id }
+        })
+      )
+    }
+
+    return res.json(device)
   }
 
   async delete(req, res) {
