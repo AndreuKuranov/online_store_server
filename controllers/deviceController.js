@@ -75,14 +75,14 @@ class DeviceController {
 
     if (info) {
       info = JSON.parse(info)
-      info.forEach(i =>
+      info.forEach(i => {
         DeviceInfo.update({
           title: i.title,
           description: i.description,
         }, {
           where: { id: i.id }
         })
-      )
+      })
     }
 
     return res.json(device)
